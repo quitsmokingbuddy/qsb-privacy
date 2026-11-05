@@ -45,6 +45,48 @@
       font-weight: 300;
     }
 
+    /* Taalkeuze: vlaggen als SVG, want vlag-emoji tonen op Windows alleen letters */
+    .lang-switch {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .lang-switch button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      padding: 6px 12px;
+      color: #ffffff;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      opacity: 0.6;
+    }
+
+    .lang-switch button[aria-pressed="true"] {
+      border-color: var(--teal);
+      opacity: 1;
+    }
+
+    .lang-switch button:hover { opacity: 1; }
+
+    .lang-switch svg {
+      width: 28px;
+      height: 18px;
+      border-radius: 3px;
+      display: block;
+    }
+
+    /* Zonder JavaScript is alleen de Nederlandse tekst zichtbaar */
+    .lang-en { display: none; }
+    body.show-en .lang-nl { display: none; }
+    body.show-en .lang-en { display: block; }
+
     .container {
       max-width: 760px;
       margin: 48px auto;
@@ -99,13 +141,25 @@
 <body>
 
   <header>
+    <div class="lang-switch">
+      <button type="button" data-lang="nl" aria-pressed="true" aria-label="Nederlands">
+        <svg viewBox="0 0 9 6" aria-hidden="true"><rect width="9" height="6" fill="#21468B"/><rect width="9" height="4" fill="#ffffff"/><rect width="9" height="2" fill="#AE1C28"/></svg>
+        NL
+      </button>
+      <button type="button" data-lang="en" aria-pressed="false" aria-label="English">
+        <svg viewBox="0 0 60 30" aria-hidden="true"><clipPath id="uk-s"><path d="M0,0 v30 h60 v-30 z"/></clipPath><clipPath id="uk-t"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><g clip-path="url(#uk-s)"><path d="M0,0 v30 h60 v-30 z" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#ffffff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#uk-t)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#ffffff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></g></svg>
+        EN
+      </button>
+    </div>
     <h1>Quit Smoking Buddy</h1>
-    <p>Privacybeleid</p>
+    <p class="lang-nl">Privacybeleid</p>
+    <p class="lang-en">Privacy Policy</p>
   </header>
 
-  <div class="container">
+  <!-- ===================== NEDERLANDS ===================== -->
+  <div class="container lang-nl" lang="nl">
 
-    <p class="updated">Laatst bijgewerkt: mei 2026</p>
+    <p class="updated">Laatst bijgewerkt: november 2026</p>
 
     <div class="card">
       <h2>1. Wie zijn wij</h2>
@@ -126,6 +180,7 @@
         <li>Coach- en notificatievoorkeuren</li>
         <li>Persoonlijke doelen die je aanmaakt</li>
       </ul>
+      <p>Deze gegevens blijven allemaal lokaal op jouw apparaat en worden nergens naartoe gestuurd (zie 4. Opslag van gegevens).</p>
       <p>Wij verzamelen geen locatiegegevens, contactgegevens of andere persoonlijke informatie buiten wat hierboven staat vermeld.</p>
     </div>
 
@@ -139,41 +194,51 @@
         <li>Tonen van gepersonaliseerde coachberichten</li>
         <li>Bijhouden van je persoonlijke doelen en prestaties</li>
       </ul>
-      <p>Wij verkopen jouw gegevens niet aan derden en gebruiken ze niet voor advertentiedoeleinden.</p>
+      <p>Daarnaast gebruiken wij een paar keuzes die je in de app maakt om de app te verbeteren (zie 6. Gebruiksinzicht).</p>
+      <p>Wij verkopen jouw gegevens niet aan derden en gebruiken ze niet voor advertentiedoeleinden. Wij zien de gegevens die je invoert ook niet: ze blijven op jouw apparaat.</p>
     </div>
 
     <div class="card">
       <h2>4. Opslag van gegevens</h2>
       <p>Alle persoonlijke gegevens worden uitsluitend lokaal opgeslagen op jouw apparaat via AsyncStorage. Er is geen centrale server of database waar jouw gegevens naartoe worden gestuurd.</p>
-      <p>Als je de app verwijdert of de app reset, worden alle opgeslagen gegevens permanent gewist.</p>
+      <p>Alleen de anonieme gegevens die in 5. Abonnementen en betalingen en 6. Gebruiksinzicht staan, gaan naar RevenueCat.</p>
+      <p>Als je de app verwijdert of de app reset, worden alle opgeslagen gegevens op jouw apparaat permanent gewist.</p>
     </div>
 
     <div class="card">
       <h2>5. Abonnementen en betalingen</h2>
-      <p>Quit Smoking Buddy biedt optionele betaalde abonnementen (maandelijks en lifetime). Betalingen worden verwerkt via Google Play. Wij hebben geen toegang tot jouw betaalgegevens zoals creditcardnummers of bankgegevens.</p>
+      <p>Quit Smoking Buddy biedt optionele betaalde abonnementen (maandelijks, jaarlijks en lifetime). Betalingen worden verwerkt via Google Play of de App Store. Wij hebben geen toegang tot jouw betaalgegevens zoals creditcardnummers of bankgegevens.</p>
       <p>Voor het beheren van abonnementen maken wij gebruik van RevenueCat. RevenueCat ontvangt een anonieme gebruikers-ID en de status van jouw abonnement. Meer informatie over het privacybeleid van RevenueCat vind je op <a href="https://www.revenuecat.com/privacy" target="_blank">revenuecat.com/privacy</a>.</p>
     </div>
 
     <div class="card">
-      <h2>6. Notificaties</h2>
-      <p>Quit Smoking Buddy verstuurt lokale notificaties op jouw apparaat. Deze notificaties worden volledig op jouw apparaat gegenereerd en vereisen geen internetverbinding. Er worden geen gegevens verstuurd naar externe servers voor het plannen van notificaties.</p>
-      <p>Je kunt notificaties op elk moment uitschakelen via de instellingen van jouw apparaat.</p>
+      <h2>6. Gebruiksinzicht</h2>
+      <p>Om de app te verbeteren, sturen wij een paar keuzes die je in de app maakt naar RevenueCat. Ze zijn gekoppeld aan dezelfde anonieme gebruikers-ID als je abonnement:</p>
+      <ul>
+        <li>Het gekozen coachschema</li>
+        <li>Of de coachmeldingen aan of uit staan</li>
+        <li>De taal van de app</li>
+        <li>Of je meedoet aan een challenge, en hoe ver je bent (bijvoorbeeld aangemeld, bezig of afgerond)</li>
+      </ul>
+      <p>Hierbij sturen wij geen naam, geen stopdatum en geen andere gegevens uit je profiel. Wij gebruiken deze gegevens alleen om te zien welke functies gebruikt worden, niet voor advertenties en niet om je te volgen in andere apps of op websites.</p>
+      <p>In de app Quit Smoking Buddy - Premium (iOS) gebruiken wij RevenueCat niet. Daar wordt niets verstuurd.</p>
     </div>
 
     <div class="card">
-      <h2>7. Advertenties</h2>
-      <p>De gratis versie van Quit Smoking Buddy toont advertenties via Google AdMob. AdMob kan gebruik maken van een advertentie-ID van jouw apparaat om relevante advertenties te tonen. Meer informatie over het privacybeleid van Google vind je op <a href="https://policies.google.com/privacy" target="_blank">policies.google.com/privacy</a>.</p>
-      <p>Premiumgebruikers zien geen advertenties.</p>
+      <h2>7. Notificaties</h2>
+      <p>Quit Smoking Buddy verstuurt lokale notificaties op jouw apparaat. Deze notificaties worden volledig op jouw apparaat gegenereerd en vereisen geen internetverbinding. Er worden geen gegevens verstuurd naar externe servers voor het plannen van notificaties.</p>
+      <p>Je kunt notificaties op elk moment uitschakelen via de instellingen van jouw apparaat. De meldingen van je coach kun je ook in de app uitzetten, via Instellingen → Coachmeldingen.</p>
     </div>
 
     <div class="card">
       <h2>8. Jouw rechten</h2>
-      <p>Omdat alle gegevens lokaal op jouw apparaat worden opgeslagen, heb jij volledige controle:</p>
+      <p>Omdat alle persoonlijke gegevens lokaal op jouw apparaat worden opgeslagen, heb jij volledige controle:</p>
       <ul>
         <li>Je kunt jouw gegevens op elk moment inzien via de app</li>
-        <li>Je kunt jouw gegevens wijzigen via Instellingen → Gegevens aanpassen</li>
-        <li>Je kunt alle gegevens permanent wissen via Instellingen → Reset app</li>
+        <li>Je kunt jouw gegevens wijzigen via Instellingen → Persoonlijke gegevens</li>
+        <li>Je kunt alle gegevens permanent wissen via Instellingen → App resetten</li>
       </ul>
+      <p>Heb je vragen over de gegevens bij RevenueCat (5. Abonnementen en betalingen en 6. Gebruiksinzicht), of wil je dat die worden verwijderd? Neem dan contact met ons op via <a href="mailto:info@quitsmokingbuddy.eu">info@quitsmokingbuddy.eu</a>.</p>
     </div>
 
     <div class="card">
@@ -194,9 +259,150 @@
 
   </div>
 
+  <!-- ===================== ENGLISH ===================== -->
+  <div class="container lang-en" lang="en">
+
+    <p class="updated">Last updated: November 2026</p>
+
+    <div class="card">
+      <h2>1. Who we are</h2>
+      <p>Quit Smoking Buddy is a mobile application developed by Quit Smoking Buddy. The app helps users quit smoking by keeping track of statistics, milestones, coaching and health information.</p>
+      <p>If you have any questions about this privacy policy, you can contact us at: <a href="mailto:info@quitsmokingbuddy.eu">info@quitsmokingbuddy.eu</a></p>
+    </div>
+
+    <div class="card">
+      <h2>2. What data we collect</h2>
+      <p>Quit Smoking Buddy collects the following data that you enter yourself:</p>
+      <ul>
+        <li>First name</li>
+        <li>Gender</li>
+        <li>Quit date and time</li>
+        <li>Number of cigarettes per day</li>
+        <li>Price per pack and number of cigarettes per pack</li>
+        <li>Chosen currency and language</li>
+        <li>Coach and notification preferences</li>
+        <li>Personal goals you create</li>
+      </ul>
+      <p>All of this data stays on your device and is not sent anywhere (see 4. Data storage).</p>
+      <p>We do not collect location data, contact details or any other personal information beyond what is listed above.</p>
+    </div>
+
+    <div class="card">
+      <h2>3. How we use your data</h2>
+      <p>Your data is used solely to make the app work:</p>
+      <ul>
+        <li>Calculating your smoke-free time, money saved and cigarettes not smoked</li>
+        <li>Showing health milestones based on your quit date</li>
+        <li>Scheduling and sending local notifications on your device</li>
+        <li>Showing personalised coach messages</li>
+        <li>Keeping track of your personal goals and achievements</li>
+      </ul>
+      <p>In addition, we use a few choices you make in the app to improve the app (see 6. Usage insights).</p>
+      <p>We do not sell your data to third parties and do not use it for advertising purposes. We cannot see the data you enter either: it stays on your device.</p>
+    </div>
+
+    <div class="card">
+      <h2>4. Data storage</h2>
+      <p>All personal data is stored exclusively on your device, using AsyncStorage. There is no central server or database to which your data is sent.</p>
+      <p>Only the anonymous data described in 5. Subscriptions and payments and 6. Usage insights is sent to RevenueCat.</p>
+      <p>If you delete or reset the app, all data stored on your device is permanently erased.</p>
+    </div>
+
+    <div class="card">
+      <h2>5. Subscriptions and payments</h2>
+      <p>Quit Smoking Buddy offers optional paid subscriptions (monthly, yearly and lifetime). Payments are processed through Google Play or the App Store. We have no access to your payment details, such as credit card numbers or bank details.</p>
+      <p>We use RevenueCat to manage subscriptions. RevenueCat receives an anonymous user ID and the status of your subscription. You can find more information about RevenueCat's privacy policy at <a href="https://www.revenuecat.com/privacy" target="_blank">revenuecat.com/privacy</a>.</p>
+    </div>
+
+    <div class="card">
+      <h2>6. Usage insights</h2>
+      <p>To improve the app, we send a few choices you make in the app to RevenueCat. They are linked to the same anonymous user ID as your subscription:</p>
+      <ul>
+        <li>The coach plan you have chosen</li>
+        <li>Whether coach notifications are on or off</li>
+        <li>The language of the app</li>
+        <li>Whether you take part in a challenge, and how far along you are (for example signed up, in progress or completed)</li>
+      </ul>
+      <p>We do not send your name, your quit date or any other data from your profile. We only use this data to see which features are used, not for advertising and not to track you across other apps or websites.</p>
+      <p>In the app Quit Smoking Buddy - Premium (iOS) we do not use RevenueCat. Nothing is sent from that app.</p>
+    </div>
+
+    <div class="card">
+      <h2>7. Notifications</h2>
+      <p>Quit Smoking Buddy sends local notifications on your device. These notifications are generated entirely on your device and do not require an internet connection. No data is sent to external servers to schedule notifications.</p>
+      <p>You can turn off notifications at any time in your device settings. You can also turn off your coach's notifications in the app, via Settings → Coach notifications.</p>
+    </div>
+
+    <div class="card">
+      <h2>8. Your rights</h2>
+      <p>Because all personal data is stored on your device, you are in full control:</p>
+      <ul>
+        <li>You can view your data in the app at any time</li>
+        <li>You can change your data via Settings → Personal details</li>
+        <li>You can permanently delete all data via Settings → Reset app</li>
+      </ul>
+      <p>Do you have questions about the data held by RevenueCat (5. Subscriptions and payments and 6. Usage insights), or would you like it to be deleted? Please contact us at <a href="mailto:info@quitsmokingbuddy.eu">info@quitsmokingbuddy.eu</a>.</p>
+    </div>
+
+    <div class="card">
+      <h2>9. Children</h2>
+      <p>Quit Smoking Buddy is not intended for children under the age of 13. We do not knowingly collect data from children. If you suspect that a child has entered data, please contact us so that we can look into it.</p>
+    </div>
+
+    <div class="card">
+      <h2>10. Changes to this policy</h2>
+      <p>We may update this privacy policy from time to time. Changes will be announced in the app and on this page. We recommend that you review this policy regularly.</p>
+    </div>
+
+    <div class="card">
+      <h2>11. Contact</h2>
+      <p>Do you have questions about this privacy policy or about how we handle your data? Please contact us at:</p>
+      <p><a href="mailto:info@quitsmokingbuddy.eu">info@quitsmokingbuddy.eu</a></p>
+    </div>
+
+  </div>
+
   <footer>
     &copy; 2026 Quit Smoking Buddy
   </footer>
+
+  <script>
+    // Standaard Nederlands. Met ?lang=en (of #en) opent de pagina direct in het
+    // Engels, zodat een Engelse link te delen is (bijv. in de stores).
+    (function () {
+      var titles = {
+        nl: 'Privacybeleid — Quit Smoking Buddy',
+        en: 'Privacy Policy - Quit Smoking Buddy'
+      };
+
+      function setLang(lang) {
+        var isEn = lang === 'en';
+        document.body.classList.toggle('show-en', isEn);
+        document.documentElement.lang = isEn ? 'en' : 'nl';
+        document.title = isEn ? titles.en : titles.nl;
+        var buttons = document.querySelectorAll('.lang-switch button');
+        for (var i = 0; i < buttons.length; i++) {
+          buttons[i].setAttribute('aria-pressed', buttons[i].getAttribute('data-lang') === lang ? 'true' : 'false');
+        }
+      }
+
+      var params = new URLSearchParams(window.location.search);
+      var start = params.get('lang') === 'en' || window.location.hash === '#en' ? 'en' : 'nl';
+      setLang(start);
+
+      var buttons = document.querySelectorAll('.lang-switch button');
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener('click', function () {
+          var lang = this.getAttribute('data-lang');
+          setLang(lang);
+          var url = new URL(window.location.href);
+          url.hash = '';
+          if (lang === 'en') { url.searchParams.set('lang', 'en'); } else { url.searchParams.delete('lang'); }
+          history.replaceState(null, '', url.toString());
+        });
+      }
+    })();
+  </script>
 
 </body>
 </html>
